@@ -1,3 +1,5 @@
+import logging
+
 import requests
 
 
@@ -33,6 +35,9 @@ class MoyklassApi:
         else:
             headers = None
 
+        logging.debug(
+            f"Sending {method} request to {url} with headers: {headers}; query params: {params}; data: {data}"
+        )
         try:
             r = requests.request(method, url, headers=headers, json=data, params=params)
             r.raise_for_status()
@@ -44,6 +49,8 @@ class MoyklassApi:
             raise MoyklassApiException("Timeout error. Try again later.")
         except requests.ConnectionError:
             raise MoyklassApiException("Connection is lost, try again later.")
+
+        logging.debug(f"Response: {r.status_code}, {r.content}")
 
         try:
             response_data = r.json()
