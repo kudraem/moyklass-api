@@ -57,13 +57,13 @@ class MoyklassApi:
         except requests.TooManyRedirects as err:
             raise MoyklassApiException(f"Too many redirects: {err}")
         except requests.HTTPError as err:
-            raise MoyklassApiException(f"HTTPError occured: {err}")
+            raise MoyklassApiException(f"HTTPError occurred: {err}")
         except requests.Timeout as err:
             raise MoyklassApiException(f"Timeout error: {err}")
         except requests.ConnectionError as err:
             raise MoyklassApiException(f"Connection is lost, try again later: {err}")
         except requests.exceptions.RequestException as err:
-            raise MoyklassApiException(f"Some error occured: {err}")
+            raise MoyklassApiException(f"Some error occurred: {err}")
 
         logging.debug(f"Response: {r.status_code}, {r.content}")
 
