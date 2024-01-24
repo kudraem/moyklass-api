@@ -65,33 +65,33 @@ class MoyklassApi:
 
     def get_payments(
         self,
-        created_at=[],
-        date=[],
-        summa=[],
+        created_at=None,
+        date=None,
+        summa=None,
         invoice_id=None,
-        optype=[],
+        optype=None,
         payment_type_id=None,
         include_user_subscriptions=False,
         user_id=None,
-        filial_id=[],
+        filial_id=None,
         append_invoices=False,
         offset=0,
         limit=100,
     ):
         params = {}
-        if len(created_at):
+        if created_at is not None:
             params["createdAt"] = created_at
 
-        if len(date):
+        if date is not None:
             params["date"] = date
 
-        if len(summa):
+        if summa is not None:
             params["summa"] = summa
 
         if invoice_id is not None:
             params["invoiceId"] = invoice_id
 
-        if len(optype):
+        if optype is not None:
             params["optype"] = optype
 
         if payment_type_id is not None:
@@ -105,7 +105,7 @@ class MoyklassApi:
         if user_id is not None:
             params["userId"] = user_id
 
-        if len(filial_id):
+        if filial_id is not None:
             params["filialId"] = filial_id
 
         if append_invoices:
