@@ -173,21 +173,16 @@ class MoyklassApi:
             params["invoiceId"] = invoice_id
 
         if optype is not None:
-            decoded_optype = []
-            for el in optype:
-                if isinstance(el, PaymentOptype):
-                    decoded_optype.append(el.value)
-
-            if len(decoded_optype):
+            decoded_optype = [
+                el.value for el in optype if isinstance(el, PaymentOptype)
+            ]
+            if decoded_optype:
                 params["optype"] = decoded_optype
 
         if payment_type_id is not None:
             params["paymentTypeId"] = payment_type_id
 
-        if include_user_subscriptions:
-            params["includeUserSubscriptions"] = "true"
-        else:
-            params["includeUserSubscriptions"] = "false"
+        params["includeUserSubscriptions"] = str(include_user_subscriptions).lower()
 
         if user_id is not None:
             params["userId"] = user_id
@@ -195,10 +190,7 @@ class MoyklassApi:
         if filial_id is not None:
             params["filialId"] = filial_id
 
-        if append_invoices:
-            params["appendInvoices"] = "true"
-        else:
-            params["appendInvoices"] = "false"
+        params["appendInvoices"] = str(append_invoices).lower()
 
         params["offset"] = offset
         params["limit"] = limit
