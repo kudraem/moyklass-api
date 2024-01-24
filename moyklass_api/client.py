@@ -54,14 +54,16 @@ class MoyklassApi:
         try:
             r = requests.request(method, url, headers=headers, json=data, params=params)
             r.raise_for_status()
-        except requests.TooManyRedirects:
-            raise MoyklassApiException("Too many redirects")
+        except requests.TooManyRedirects as err:
+            raise MoyklassApiException(f"Too many redirects: {err}")
         except requests.HTTPError as err:
-            raise MoyklassApiException(f"HTTPError is occured, and it is {err}")
-        except requests.Timeout:
-            raise MoyklassApiException("Timeout error. Try again later.")
-        except requests.ConnectionError:
-            raise MoyklassApiException("Connection is lost, try again later.")
+            raise MoyklassApiException(f"HTTPError occured: {err}")
+        except requests.Timeout as err:
+            raise MoyklassApiException(f"Timeout error: {err}")
+        except requests.ConnectionError as err:
+            raise MoyklassApiException(f"Connection is lost, try again later: {err}")
+        except requests.exceptions.RequestException as err:
+            raise MoyklassApiException(f"Some error occured: {err}")
 
         logging.debug(f"Response: {r.status_code}, {r.content}")
 
