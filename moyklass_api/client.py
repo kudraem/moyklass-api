@@ -40,7 +40,7 @@ class MoyklassApi:
         path: str,
         data: Dict[str, Any] | None = None,
         params: Dict[str, Any] | None = None,
-    ) -> Dict[str, Any]:
+    ) -> Dict[str, Any] | str:
         url = f"{self.base_url}/{path}"
 
         headers = None
@@ -70,7 +70,7 @@ class MoyklassApi:
         try:
             response_data = r.json()
         except requests.JSONDecodeError:
-            response_data = ""
+            response_data = r.text
 
         return response_data
 
