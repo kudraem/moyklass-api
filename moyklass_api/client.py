@@ -27,11 +27,10 @@ class MoyklassApi:
     def _make_request(self, method, path, data=None, params=None):
         url = f"{self.base_url}/{path}"
 
-        headers = {}
+        headers = None
         if self.token is not None:
-            headers["x-access-token"] = self.token
-        else:
-            headers = None
+            headers = dict()
+            headers["x-access-token"] = self.token    
 
         logging.debug(
             f"Sending {method} request to {url} with headers: {headers}; query params: {params}; data: {data}"
