@@ -1,4 +1,5 @@
 import logging
+from enum import Enum
 
 import requests
 
@@ -7,6 +8,12 @@ class MoyklassApiException(Exception):
     def __init__(self, message=None):
         self.message = message
         super().__init__(message)
+
+
+class PaymentOptype(Enum):
+    INCOME = "income"
+    DEBIT = "debit"
+    REFUND = "refund"
 
 
 class MoyklassApi:
@@ -92,7 +99,13 @@ class MoyklassApi:
             params["invoiceId"] = invoice_id
 
         if optype is not None:
-            params["optype"] = optype
+            decoded_optype = []
+            for el in optype:
+                if isinstance(el, PaymentOptype):
+                    decoded_optype.append(el.value)
+
+            if len(decoded_optype):
+                params["optype"] = decoded_optype
 
         if payment_type_id is not None:
             params["paymentTypeId"] = payment_type_id
