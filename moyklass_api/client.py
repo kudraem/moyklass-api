@@ -3,12 +3,10 @@ import logging
 import requests
 
 
-class MoyklassApiException(BaseException):
-    def __init__(self, message):
+class MoyklassApiException(Exception):
+    def __init__(self, message=None):
         self.message = message
-
-    def __str__(self):
-        return self.message
+        super().__init__(message)
 
 
 class MoyklassApi:
