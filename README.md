@@ -10,9 +10,9 @@ from moyklass_api.payment import Payment
 
 api_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 with MoyklassApi(api_key) as mc:
-    mc_payment = Payment(mc)
+    mk_payment = Payment(mc)
     try:
-        payments = mc_payment.get_payments(date=["2024-01-24", "2024-01-24"])
+        payments = mk_payment.get_payments(date=["2024-01-24", "2024-01-24"])
     except Exception:
         print("Возникла ошибка при получении оплат")
     else:
@@ -29,9 +29,9 @@ api_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 mc = MoyklassApi(api_key)
 mc.set_token()
 
-mc_payment = Payment(mc)
+mk_payment = Payment(mc)
 try:
-    payments = mc_payment.get_payments(date=["2024-01-24", "2024-01-24"])
+    payments = mk_payment.get_payments(date=["2024-01-24", "2024-01-24"])
 except Exception:
     print("Возникла ошибка при получении оплат")
 else:
@@ -56,9 +56,9 @@ logging.basicConfig(
 
 api_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 with MoyklassApi(api_key) as mc:
-    mc_payment = Payment(mc)
+    mk_payment = Payment(mc)
     try:
-        payments = mc_payment.get_payments(date=["2024-01-24", "2024-01-24"])
+        payments = mk_payment.get_payments(date=["2024-01-24", "2024-01-24"])
     except Exception:
         print("Возникла ошибка при получении оплат")
     else:
