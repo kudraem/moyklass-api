@@ -37,3 +37,28 @@ else:
 
 mc.revoke_token()
 ```
+
+## Пример с использованием логгирования
+```python
+import logging
+
+from moyklass_api.client import MoyklassApi
+from moyklass_api.payment import Payment
+
+logging.basicConfig(
+    format="%(asctime)s:%(levelname)s:%(message)s",
+    datefmt="%m/%d/%Y %I:%M:%S %p",
+    level=logging.DEBUG,
+)
+
+api_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+with MoyklassApi(api_key) as mc:
+    mc_payment = Payment(mc)
+    try:
+        payments = mc_payment.get_payments(date=["2024-01-24", "2024-01-24"])
+    except BaseException:
+        print("Возникла ошибка при получении оплат")
+    else:
+        for p in payments["payments"]:
+            print(p["id"], p["summa"])
+```
