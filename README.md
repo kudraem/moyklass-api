@@ -13,7 +13,7 @@ with MoyklassApi(api_key) as mc:
     mc_payment = Payment(mc)
     try:
         payments = mc_payment.get_payments(date=["2024-01-24", "2024-01-24"])
-    except BaseException:
+    except Exception:
         print("Возникла ошибка при получении оплат")
     else:
         for p in payments["payments"]:
@@ -32,7 +32,7 @@ mc.set_token()
 mc_payment = Payment(mc)
 try:
     payments = mc_payment.get_payments(date=["2024-01-24", "2024-01-24"])
-except BaseException:
+except Exception:
     print("Возникла ошибка при получении оплат")
 else:
     for p in payments["payments"]:
@@ -59,7 +59,7 @@ with MoyklassApi(api_key) as mc:
     mc_payment = Payment(mc)
     try:
         payments = mc_payment.get_payments(date=["2024-01-24", "2024-01-24"])
-    except BaseException:
+    except Exception:
         print("Возникла ошибка при получении оплат")
     else:
         for p in payments["payments"]:
