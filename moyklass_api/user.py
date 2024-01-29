@@ -49,6 +49,27 @@ class User:
         responsibles: List[int] | None = None,
         attributes: List[Dict[str, Any]] | None = None,
     ) -> Dict[str, Any]:
+        """
+        Creates a new user using the provided information.
+
+        Args:
+            name (str): The name of the user.
+            email (str, optional): The email address of the user. Defaults to None.
+            phone (str, optional): The phone number of the user. Defaults to None.
+            adv_source_id (int, optional): The advertisement source ID. Defaults to None.
+            create_source_id (int, optional): The creation source ID. Defaults to None.
+            status_change_reason_id (int, optional): The status change reason ID. Defaults to None.
+            client_state_id (int, optional): The client state ID. Defaults to None.
+            filials (List[int], optional): List of filial IDs. Defaults to None.
+            responsibles (List[int], optional): List of responsible user IDs. Defaults to None.
+            attributes (List[Dict[str, Any]], optional): List of attribute dictionaries. Defaults to None.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the response from the Moyklass API.
+
+        Note:
+            https://api.moyklass.com/#tag/users/paths/~1v1~1company~1users/post
+        """
         params = {}
         params["name"] = name
 
@@ -95,6 +116,27 @@ class User:
         responsibles: List[int] | None = None,
         attributes: List[Dict[str, Any]] | None = None,
     ) -> Dict[str, Any]:
+        """
+        Updates the information of an existing user.
+
+        Args:
+            user_id (int): The ID of the user to update.
+            name (str): The updated name of the user.
+            email (str, optional): The updated email address of the user. Defaults to None.
+            phone (str, optional): The updated phone number of the user. Defaults to None.
+            adv_source_id (int, optional): The updated advertisement source ID. Defaults to None.
+            create_source_id (int, optional): The updated creation source ID. Defaults to None.
+            status_change_reason_id (int, optional): The updated status change reason ID. Defaults to None.
+            client_state_id (int, optional): The updated client state ID. Defaults to None.
+            filials (List[int], optional): Updated list of filial IDs. Defaults to None.
+            responsibles (List[int], optional): Updated list of responsible user IDs. Defaults to None.
+            attributes (List[Dict[str, Any]], optional): Updated list of attribute dictionaries. Defaults to None.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the response from the Moyklass API.
+        Note:
+            https://api.moyklass.com/#tag/users/paths/~1v1~1company~1users~1%7BuserId%7D/post
+        """
         params = {}
         params["name"] = name
 
@@ -145,6 +187,30 @@ class User:
         bitrix24_contact_id: int | None = None,
         include_pay_link: bool = False,
     ) -> Dict[str, Any]:
+        """
+        Retrieves a list of users based on specified filters.
+
+        Args:
+            created_at (List[str], optional): List of creation dates. Defaults to None.
+            updated_at (List[str], optional): List of update dates. Defaults to None.
+            state_change_at (List[str], optional): List of state change dates. Defaults to None.
+            phone (str, optional): Phone number filter. Defaults to None.
+            email (str, optional): Email filter. Defaults to None.
+            name (str, optional): Name filter. Defaults to None.
+            offset (int, optional): Result offset for pagination. Defaults to 0.
+            limit (int, optional): Maximum number of results to return. Defaults to 100.
+            sort (UserSort, optional): Sort parameter. Defaults to UserSort.ID.
+            sort_direction (UserSortDirection, optional): Sort direction parameter. Defaults to UserSortDirection.ASC.
+            amoCRM_contact_id (int, optional): amoCRM contact ID filter. Defaults to None.
+            bitrix24_contact_id (int, optional): Bitrix24 contact ID filter. Defaults to None.
+            include_pay_link (bool, optional): Whether to include pay link. Defaults to False.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the response from the Moyklass API.
+
+        Note:
+            https://api.moyklass.com/#tag/users/paths/~1v1~1company~1users/get
+        """
         params = {}
         if created_at is not None:
             params["createdAt"] = created_at
