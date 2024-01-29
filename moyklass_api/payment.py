@@ -22,10 +22,10 @@ class Payment:
         invoice_id: int | None = None,
         optype: List[PaymentOptype] | None = None,
         payment_type_id: int | None = None,
-        include_user_subscriptions: bool | None = False,
+        include_user_subscriptions: bool = False,
         user_id: int | None = None,
         filial_id: List[int] | None = None,
-        append_invoices: bool | None = False,
+        append_invoices: bool = False,
         offset: int = 0,
         limit: int = 100,
     ) -> Dict[str, Any]:
@@ -39,10 +39,10 @@ class Payment:
             invoice_id (int, optional): Invoice ID. Defaults to None.
             optype (List[PaymentOptype], optional): List of payment operation types. Defaults to None.
             payment_type_id (int, optional): Payment type ID. Defaults to None.
-            include_user_subscriptions (bool, optional): Include user subscriptions in the response. Defaults to False.
+            include_user_subscriptions (bool): Include user subscriptions in the response. Defaults to False.
             user_id (int, optional): User ID. Defaults to None.
             filial_id (List[int], optional): List of filial IDs. Defaults to None.
-            append_invoices (bool, optional): Append invoices to the response. Defaults to False.
+            append_invoices (bool): Append invoices to the response. Defaults to False.
             offset (int, optional): Offset for pagination. Defaults to 0.
             limit (int, optional): Limit for pagination. Defaults to 100.
 
