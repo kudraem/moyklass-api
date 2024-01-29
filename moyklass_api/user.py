@@ -48,7 +48,7 @@ class User:
         filials: List[int] | None = None,
         responsibles: List[int] | None = None,
         attributes: List[Dict[str, Any]] | None = None,
-    ):
+    ) -> Dict[str, Any]:
         params = {}
         params["name"] = name
 
@@ -94,7 +94,7 @@ class User:
         filials: List[int] | None = None,
         responsibles: List[int] | None = None,
         attributes: List[Dict[str, Any]] | None = None,
-    ):
+    ) -> Dict[str, Any]:
         params = {}
         params["name"] = name
 
@@ -144,7 +144,7 @@ class User:
         amoCRM_contact_id: int | None = None,
         bitrix24_contact_id: int | None = None,
         include_pay_link: bool = False,
-    ):
+    ) -> Dict[str, Any]:
         params = {}
         if created_at is not None:
             params["createdAt"] = created_at
