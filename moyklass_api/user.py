@@ -81,6 +81,54 @@ class User:
 
         return self.client._make_request("POST", "v1/company/users", params=params)
 
+    def update_user(
+        self,
+        user_id: int,
+        name: str,
+        email: str | None = None,
+        phone: str | None = None,
+        adv_source_id: int | None = None,
+        create_source_id: int | None = None,
+        status_change_reason_id: int | None = None,
+        client_state_id: int | None = None,
+        filials: List[int] | None = None,
+        responsibles: List[int] | None = None,
+        attributes: List[Dict[str, Any]] | None = None,
+    ):
+        params = {}
+        params["name"] = name
+
+        if email is not None:
+            params["email"] = email
+
+        if phone is not None:
+            params["phone"] = phone
+
+        if adv_source_id is not None:
+            params["advSourceId"] = adv_source_id
+
+        if create_source_id is not None:
+            params["createSourceId"] = create_source_id
+
+        if status_change_reason_id is not None:
+            params["statusChangeReasonId"] = status_change_reason_id
+
+        if client_state_id is not None:
+            params["clientStateId"] = client_state_id
+
+        if filials is not None:
+            params["filials"] = filials
+
+        if responsibles is not None:
+            params["responsibles"] = responsibles
+
+        if attributes is not None:
+            params["attributes"] = attributes
+
+        return self.client._make_request(
+            "POST", f"v1/company/users/{user_id}", params=params
+        )
+
     def get_users(
         self,
         created_at: List[str] | None = None,
