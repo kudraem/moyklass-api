@@ -16,6 +16,13 @@ class UserSortDirection(Enum):
     DESC = "desc"
 
 
+class UserSubscriptionId(Enum):
+    NOT_ACTIVE = 1
+    ACTIVE = 2
+    FROZEN = 3
+    FINISHED = 4
+
+
 class User:
     def __init__(self, client: "MoyklassApi") -> None:
         self.client = client
@@ -260,3 +267,28 @@ class User:
             https://api.moyklass.com/#tag/catalog/paths/~1v1~1company~1userAttributes/get
         """
         return self.client._make_request("GET", "v1/company/userAttributes")
+
+    def set_user_subscription_status(
+        self,
+        user_subscription_id: int,
+        status_id: UserSubscriptionId
+    ) -> Dict[str, Any]:
+        """
+        Sets the status of a the user subscription.
+
+        Args:
+            user_subscription_id (int): The ID of the user subscription.
+            status_id (UserSubscriptionId): The status ID to set.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the response from the Moyklass API.
+
+        Note:
+            https://api.moyklass.com/#tag/userSubscriptions/paths/~1v1~1company~1userSubscriptions~1%7BuserSubscriptionId%7D~1status/post
+        """
+        data = {}
+        if isinstance(status_id, UserSubscriptionId):
+            data["statusId"] = status_id.value
+
+        url = f"v1/company/userSubscriptions/{user_subscription_id}/status"
+        return self.client._make_request("POST", url, data=data)
