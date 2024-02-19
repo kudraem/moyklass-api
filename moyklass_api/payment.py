@@ -101,3 +101,63 @@ class Payment:
             https://api.moyklass.com/#tag/catalog/paths/~1v1~1company~1paymentTypes/get
         """
         return self.client._make_request("GET", "v1/company/paymentTypes")
+
+    def create_payments(
+        self,
+        user_id: int,
+        date: str,
+        summa: float,
+        optype: PaymentOptype,
+        payment_type_id: int,
+        user_subscription_id: int | None = None,
+        filial_id: int | None = None,
+        comment: str | None = None,
+        manager_id: int | None = None,
+        cashbox_id: int | None = None,
+    ) -> Dict[str, Any]:
+        """
+        Creates a new payment.
+
+        Args:
+            user_id (int): The ID of the user associated with the payment.
+            date (str): The date of the payment.
+            summa (float): The amount of the payment.
+            optype (PaymentOptype): The type of operation for the payment.
+            payment_type_id (int): The ID of the payment type.
+            user_subscription_id (int, optional): The ID of the user subscription associated with the payment. Defaults to None.
+            filial_id (int, optional): The ID of the filial associated with the payment. Defaults to None.
+            comment (str, optional): A comment associated with the payment. Defaults to None.
+            manager_id (int, optional): The ID of the manager associated with the payment. Defaults to None.
+            cashbox_id (int, optional): The ID of the cashbox associated with the payment. Defaults to None.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the response from the Moyklass API.
+        Note:
+            https://api.moyklass.com/#tag/payments/paths/~1v1~1company~1payments/post
+        """
+        data = {}
+        data["userId"] = user_id
+        data["date"] = date
+        data["summa"] = summa
+
+        if isinstance(optype, PaymentOptype):
+            data["optype"] = optype.value
+
+        data["paymentTypeId"] = payment_type_id
+
+        if user_subscription_id is not None:
+            data["userSubscriptionId"] = user_subscription_id
+
+        if filial_id is not None:
+            data["filialId"] = filial_id
+
+        if comment is not None:
+            data["comment"] = comment
+
+        if manager_id is not None:
+            data["managerId"] = manager_id
+
+        if cashbox_id is not None:
+            data["cashboxId"] = cashbox_id
+
+        return self.client._make_request("POST", "v1/company/payments", data=data)
