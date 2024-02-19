@@ -268,10 +268,185 @@ class User:
         """
         return self.client._make_request("GET", "v1/company/userAttributes")
 
-    def set_user_subscription_status(
+    def get_user_subscriptions(
         self,
-        user_subscription_id: int,
-        status_id: UserSubscriptionId
+        user_id: int | None = None,
+        manager_id: int | None = None,
+        external_id: str | List[str] | None = None,
+        course_id: List[int] | None = None,
+        class_id: List[int] | None = None,
+        main_class_id: int | List[int] | None = None,
+        sell_date: List[str] | None = None,
+        begin_date: List[str] | None = None,
+        end_date: List[str] | None = None,
+        status_id: List[UserSubscriptionId] | None = None,
+        offset: int = 0,
+        limit: int = 100,
+    ) -> Dict[str, Any]:
+        """
+        Retrieves a list of user subscriptions based on specified filters.
+
+        Args:
+            user_id (int, optional): The ID of the user whose subscriptions are to be retrieved. Defaults to None.
+            manager_id (int, optional): The ID of the manager associated with the subscriptions. Defaults to None.
+            external_id (str | List[str], optional): The external ID(s) associated with the subscriptions. Defaults to None.
+            course_id (List[int], optional): The ID(s) of the courses associated with the subscriptions. Defaults to None.
+            class_id (List[int], optional): The ID(s) of the classes associated with the subscriptions. Defaults to None.
+            main_class_id (int | List[int], optional): The ID(s) of the main classes associated with the subscriptions. Defaults to None.
+            sell_date (List[str], optional): The sell date(s) associated with the subscriptions. Defaults to None.
+            begin_date (List[str], optional): The begin date(s) associated with the subscriptions. Defaults to None.
+            end_date (List[str], optional): The end date(s) associated with the subscriptions. Defaults to None.
+            status_id (List[UserSubscriptionId], optional): The status ID(s) associated with the subscriptions. Defaults to None.
+            offset (int, optional): Result offset for pagination. Defaults to 0.
+            limit (int, optional): Maximum number of results to return. Defaults to 100.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the response from the Moyklass API.
+
+        Note:
+            https://api.moyklass.com/#tag/userSubscriptions/paths/~1v1~1company~1userSubscriptions/get
+        """
+        params = {}
+
+        if user_id is not None:
+            params["userId"] = user_id
+
+        if manager_id is not None:
+            params["managerId"] = manager_id
+
+        if external_id is not None:
+            params["externalId"] = external_id
+
+        if course_id is not None:
+            params["courseId"] = course_id
+
+        if class_id is not None:
+            params["classId"] = class_id
+
+        if main_class_id is not None:
+            params["mainClassId"] = main_class_id
+
+        if sell_date is not None:
+            params["sellDate"] = sell_date
+
+        if begin_date is not None:
+            params["beginDate"] = begin_date
+
+        if end_date is not None:
+            params["endDate"] = end_date
+
+        if status_id is not None:
+            decoded_status_id = [
+                el.value for el in status_id if isinstance(el, UserSubscriptionId)
+            ]
+            if decoded_status_id:
+                params["statusId"] = decoded_status_id
+
+        params["offset"] = offset
+        params["limit"] = limit
+
+        return self.client._make_request(
+            "GET", "v1/company/userSubscriptions", params=params
+        )
+
+    def create_user_subscription(
+        self,
+        user_id: int,
+        subscription_id: int,
+        sell_date: str,
+        class_ids: List[int],
+        main_class_id: int,
+        external_id: int | None = None,
+        original_price: float | None = None,
+        discount: float | None = None,
+        extra_discount: float | None = None,
+        comment: str | None = None,
+        begin_date: str | None = None,
+        end_date: str | None = None,
+        period: str | None = None,
+        visit_count: int | None = None,
+        manager_id: int | None = None,
+        autodebit: bool = True,
+        burn_leftovers: bool = True,
+        use_leftovers: bool = True,
+    ) -> Dict[str, Any]:
+        """
+        Creates a new user subscription.
+
+        Args:
+            user_id (int): The ID of the user for whom the subscription is created.
+            subscription_id (int): The ID of the subscription being assigned to the user.
+            sell_date (str): The date of sale for the subscription.
+            class_ids (List[int]): List of class IDs associated with the subscription.
+            main_class_id (int): The ID of the main class associated with the subscription.
+            external_id (int, optional): External ID for the subscription. Defaults to None.
+            original_price (float, optional): The original price of the subscription. Defaults to None.
+            discount (float, optional): The discount applied to the subscription. Defaults to None.
+            extra_discount (float, optional): Additional discount applied to the subscription. Defaults to None.
+            comment (str, optional): Additional comment for the subscription. Defaults to None.
+            begin_date (str, optional): The start date of the subscription. Defaults to None.
+            end_date (str, optional): The end date of the subscription. Defaults to None.
+            period (str, optional): The subscription period. Defaults to None.
+            visit_count (int, optional): The visit count for the subscription. Defaults to None.
+            manager_id (int, optional): The ID of the manager associated with the subscription. Defaults to None.
+            autodebit (bool, optional): Whether autodebit is enabled for the subscription. Defaults to True.
+            burn_leftovers (bool, optional): Whether leftovers are burnt for the subscription. Defaults to True.
+            use_leftovers (bool, optional): Whether leftovers are used for the subscription. Defaults to True.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the response from the Moyklass API.
+
+        Note:
+            https://api.moyklass.com/#tag/userSubscriptions/paths/~1v1~1company~1userSubscriptions/post
+        """
+
+        data = {}
+        data["userId"] = user_id
+        data["subscriptionId"] = subscription_id
+        data["sellDate"] = sell_date
+        data["classIds"] = class_ids
+        data["mainClassId"] = main_class_id
+
+        if external_id is not None:
+            data["externalId"] = external_id
+
+        if original_price is not None:
+            data["originalPrice"] = original_price
+
+        if discount is not None:
+            data["discount"] = discount
+
+        if extra_discount is not None:
+            data["extraDiscount"] = extra_discount
+
+        if comment is not None:
+            data["comment"] = comment
+
+        if begin_date is not None:
+            data["beginDate"] = begin_date
+
+        if end_date is not None:
+            data["endDate"] = end_date
+
+        if period is not None:
+            data["period"] = period
+
+        if visit_count is not None:
+            data["visitCount"] = visit_count
+
+        if manager_id is not None:
+            data["managerId"] = manager_id
+
+        data["autodebit"] = autodebit
+        data["burnLeftovers"] = burn_leftovers
+        data["useLeftovers"] = use_leftovers
+
+        return self.client._make_request(
+            "POST", "v1/company/userSubscriptions", data=data
+        )
+
+    def set_user_subscription_status(
+        self, user_subscription_id: int, status_id: UserSubscriptionId
     ) -> Dict[str, Any]:
         """
         Sets the status of a the user subscription.
