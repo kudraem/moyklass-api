@@ -248,3 +248,15 @@ class User:
         params["includePayLink"] = str(include_pay_link).lower()
 
         return self.client._make_request("GET", "v1/company/users", params=params)
+
+    def get_user_attributes(self) -> Dict[str, Any]:
+        """
+        Retrieves a list of user's attributes.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the response from the Moyklass API.
+
+        Note:
+            https://api.moyklass.com/#tag/catalog/paths/~1v1~1company~1userAttributes/get
+        """
+        return self.client._make_request("GET", "v1/company/userAttributes")
