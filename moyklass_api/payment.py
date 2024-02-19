@@ -89,3 +89,15 @@ class Payment:
         params["limit"] = limit
 
         return self.client._make_request("GET", "v1/company/payments", params=params)
+
+    def get_payment_types(self) -> List[Dict[str, Any]]:
+        """
+        Retrieves a list of payment types from the Moyklass API.
+
+        Returns:
+            List[Dict[str, Any]]: A list containing dictionaries of payment types.
+
+        Note:
+            https://api.moyklass.com/#tag/catalog/paths/~1v1~1company~1paymentTypes/get
+        """
+        return self.client._make_request("GET", "v1/company/paymentTypes")
