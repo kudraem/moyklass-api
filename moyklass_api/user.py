@@ -144,38 +144,38 @@ class User:
         Note:
             https://api.moyklass.com/#tag/users/paths/~1v1~1company~1users~1%7BuserId%7D/post
         """
-        params = {}
-        params["name"] = name
+        data = {}
+        data["name"] = name
 
         if email is not None:
-            params["email"] = email
+            data["email"] = email
 
         if phone is not None:
-            params["phone"] = phone
+            data["phone"] = phone
 
         if adv_source_id is not None:
-            params["advSourceId"] = adv_source_id
+            data["advSourceId"] = adv_source_id
 
         if create_source_id is not None:
-            params["createSourceId"] = create_source_id
+            data["createSourceId"] = create_source_id
 
         if status_change_reason_id is not None:
-            params["statusChangeReasonId"] = status_change_reason_id
+            data["statusChangeReasonId"] = status_change_reason_id
 
         if client_state_id is not None:
-            params["clientStateId"] = client_state_id
+            data["clientStateId"] = client_state_id
 
         if filials is not None:
-            params["filials"] = filials
+            data["filials"] = filials
 
         if responsibles is not None:
-            params["responsibles"] = responsibles
+            data["responsibles"] = responsibles
 
         if attributes is not None:
-            params["attributes"] = attributes
+            data["attributes"] = attributes
 
         return self.client._make_request(
-            "POST", f"v1/company/users/{user_id}", params=params
+            "POST", f"v1/company/users/{user_id}", data=data
         )
 
     def get_users(
